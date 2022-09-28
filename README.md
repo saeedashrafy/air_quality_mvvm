@@ -12,7 +12,7 @@
 
 ## API keys
 
-You need to supply API / client keys for the service the app uses.
+You need to supply API key for the service that app uses.
 
 - [iqair](https://www.iqair.com)
 
