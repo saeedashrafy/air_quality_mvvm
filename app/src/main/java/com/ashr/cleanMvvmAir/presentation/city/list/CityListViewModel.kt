@@ -25,6 +25,11 @@ class CityViewModel @Inject constructor(
     private fun getCities(countryName: String, stateName: String) {
         viewModelScope.launch(dispatcher) {
             try {
+                updateState {
+                    it.copy(
+                        isLoading = true,
+                    )
+                }
                 val cities = getCityUseCase(countryName, stateName)
                 updateState {
                     it.copy(

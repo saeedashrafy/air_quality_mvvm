@@ -8,14 +8,13 @@ import com.ashr.cleanMvvmAir.presentation.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CountryViewModel @Inject constructor(
     private val getAllCountriesUseCase: GetCountriesUseCase,
     @DispatcherAnnotations.Io private val dispatcher: CoroutineDispatcher,
-) : BaseViewModel<CountryUiState, CountryUiIntent>(CountryUiState(isLoading = true)) {
+) : BaseViewModel<CountryUiState, CountryUiIntent>(CountryUiState()) {
 
 
     override fun processIntents(intent: CountryUiIntent) {
@@ -33,6 +32,11 @@ class CountryViewModel @Inject constructor(
     private fun getCountries() {
         viewModelScope.launch(dispatcher) {
             try {
+                updateState {
+                    it.copy(
+                        isLoading = true,
+                    )
+                }
                 val countries = getAllCountriesUseCase()
                 updateState {
                     it.copy(

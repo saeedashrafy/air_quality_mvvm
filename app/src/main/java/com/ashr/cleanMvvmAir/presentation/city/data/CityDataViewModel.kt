@@ -8,7 +8,6 @@ import com.ashr.cleanMvvmAir.presentation.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,9 +29,12 @@ class CityDataViewModel @Inject constructor(
     private fun getCityData(countryName: String, stateName: String, cityName: String) {
         viewModelScope.launch(dispatcher) {
             try {
+                updateState {
+                    it.copy(isLoading = true)
+                }
                 val cityData = getCityDataUseCase(countryName, stateName, cityName)
                 updateState {
-                    it.copy(isLoading = false, data = cityData)
+                    it.copy(isLoading = false, data = cityData, error = "")
                 }
             } catch (exp: Exception) {
                 updateState {

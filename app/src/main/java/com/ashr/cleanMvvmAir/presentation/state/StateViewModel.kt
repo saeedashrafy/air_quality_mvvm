@@ -15,7 +15,7 @@ class StateViewModel @Inject constructor(
     private val getStatesUseCase: GetStatesUseCase,
     @DispatcherAnnotations.Io private val dispatcher: CoroutineDispatcher
 ) :
-    BaseViewModel<StateListUiState, StateUiIntent>(StateListUiState(isLoading = true)) {
+    BaseViewModel<StateListUiState, StateUiIntent>(StateListUiState()) {
 
 
     override fun processIntents(intent: StateUiIntent) {
@@ -41,6 +41,11 @@ class StateViewModel @Inject constructor(
     private fun getStates(countryName: String) {
         viewModelScope.launch(dispatcher) {
             try {
+                updateState {
+                    it.copy(
+                        isLoading = true,
+                    )
+                }
                 val states = getStatesUseCase(countryName)
                 updateState {
                     it.copy(
