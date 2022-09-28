@@ -10,6 +10,15 @@
 - Clean Architecture approach.
 
 
+## API keys
+
+You need to supply API / client keys for the service the app uses.
+
+- [iqair](https://www.iqair.com)
+
+Once you obtain the key, you can set it in your [Interceptor](https://github.com/saeedashrafy/air_quality_mvvm/blob/c5e3f13d85af1b19a39be708d796e382535cc1d1/app/src/main/java/com/ashr/cleanMvvmAir/remote/service/Interceptor.kt)
+
+
 ## Demo
 
 <img src="https://github.com/saeedashrafy/air_quality_mvvm/blob/main/screenshot_air_quality.jpg" width=800 />
