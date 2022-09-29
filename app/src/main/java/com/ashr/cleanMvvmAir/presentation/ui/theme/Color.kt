@@ -12,11 +12,15 @@ val White200 = Color(0xFFf3f3f3)
 val Black200 = Color(0xFF121212)
 
 
-val BackgroundLight = Color(0xFFF5F2F5)
-val BackgroundDark = Color(0xFF24292E)
+val BackgroundLight = Color(0xFFFFFFFF)
+val BackgroundDark = Color(0xFF121212)
 
-val DividerLight = Color(0XFFF2F4F5)
+val DividerLight = Color(0xFFEBEBEB)
 val DividerDark = Color(0xFF3F3E3E)
+
+
+val GrayLight = Color(0XFFf2f4f5)
+val GrayDark = Color(0XFF3f3e3e)
 
 val navigationBackIconDark = White
 val navigationBackIconLight = Black

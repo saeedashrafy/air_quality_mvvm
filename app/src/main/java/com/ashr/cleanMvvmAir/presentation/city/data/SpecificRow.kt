@@ -20,7 +20,7 @@ fun SpecificRow(title: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 10.dp)
+            .padding(horizontal = 5.dp, vertical = 5.dp)
             .background(MaterialTheme.colors.dividerColor, RoundedCornerShape(10.dp))
             .padding(horizontal = 10.dp, vertical = 15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,

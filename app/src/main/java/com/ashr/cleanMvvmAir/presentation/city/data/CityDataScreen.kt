@@ -65,6 +65,7 @@ fun CityDataScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(bottom = 20.dp)
                         .background(
                             cityData.domainPollutionData.aqiLevel.getAppropriateColor(),
                             RoundedCornerShape(10.dp)
@@ -85,7 +86,7 @@ fun CityDataScreen(
                         )
                         Text(
                             text = cityData.domainPollutionData.aqiLevel.levelName,
-                            style = MaterialTheme.typography.h4,
+                            style = MaterialTheme.typography.h5,
                             modifier = Modifier
                                 .padding(5.dp)
 
@@ -106,6 +107,7 @@ fun CityDataScreen(
 
                     )
                 }
+                SpecificRow("Updated at", cityData.domainPollutionData.updatedTime)
                 SpecificRow("Temperature", "${cityData.domainWeatherData.temperature}°C")
                 SpecificRow("Humidity", "${cityData.domainWeatherData.humidity}%")
                 SpecificRow("Pressure", "${cityData.domainWeatherData.pressure} mb")

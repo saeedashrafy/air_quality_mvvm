@@ -4,6 +4,8 @@ import com.ashr.cleanMvvmAir.domain.model.AqiLevel
 import com.ashr.cleanMvvmAir.domain.model.DomainCityData
 import com.ashr.cleanMvvmAir.domain.model.DomainPollutionData
 import com.ashr.cleanMvvmAir.domain.model.DomainWeatherData
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 data class CityDataEntity(
@@ -25,7 +27,10 @@ data class PollutionEntity(
 
 fun PollutionEntity.toDomain(): DomainPollutionData {
     return DomainPollutionData(
-        updatedTime = timeStamp,
+        convertFormatOfDate(
+            timeStamp, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            "HH:mm:ss"
+        ),
         airQualityIndexUs = airQualityIndexUs,
         aqiLevel = getAqiLevel(airQualityIndexUs)
     )
@@ -53,6 +58,17 @@ fun getAqiLevel(aqi: Int): AqiLevel {
         }
         else -> return AqiLevel.Unknown
     }
+}
+
+private fun convertFormatOfDate(
+    dateString: String,
+    currentFormat: String,
+    desiredFormat: String
+): String {
+    val currentSdf = SimpleDateFormat(currentFormat, Locale.getDefault())
+    val currentDate: Date? = currentSdf.parse(dateString)
+    val desiredSdf = SimpleDateFormat(desiredFormat, Locale.getDefault())
+    return desiredSdf.format(currentDate!!)
 }
 
 data class WeatherEntity(

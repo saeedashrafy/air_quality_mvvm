@@ -1,14 +1,10 @@
 package com.ashr.cleanMvvmAir.presentation.city.list
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,8 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ashr.cleanMvvmAir.presentation.ErrorHandler
 import com.ashr.cleanMvvmAir.presentation.ItemRow
-import com.ashr.cleanMvvmAir.presentation.ui.theme.dividerColor
-import com.ashr.cleanMvvmAir.presentation.ui.widget.AppOutlinedTextField
+import com.ashr.cleanMvvmAir.presentation.ui.widget.AppTextField
 import com.ashr.cleanMvvmAir.presentation.ui.widget.CircularLoadingView
 
 @Composable
@@ -48,9 +43,9 @@ fun CityListScreen(
                 viewModel.processIntents(CityUiIntent.GetCities(countryName ?: "", stateName ?: ""))
             }
         } else {
-            AppOutlinedTextField(
+            AppTextField(
                 value = uiState.filter,
-                label = "Write your city",
+                label = "filter",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
@@ -66,27 +61,17 @@ fun CityListScreen(
                     .fillMaxWidth()
             ) {
                 items(uiState.filteredCities) { city ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 5.dp)
-                            .border(
-                                width = 1.25.dp,
-                                color = MaterialTheme.colors.dividerColor,
-                                shape = RoundedCornerShape(10.dp)
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ItemRow(
-                            city.name,
-                            onClick = {
-                                onNavigateToDetail(
-                                    countryName ?: "",
-                                    stateName ?: "",
-                                    city.name
-                                )
-                            })
-                    }
+
+                    ItemRow(
+                        city.name,
+                        onClick = {
+                            onNavigateToDetail(
+                                countryName ?: "",
+                                stateName ?: "",
+                                city.name
+                            )
+                        })
+
 
                 }
             }

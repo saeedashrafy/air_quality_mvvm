@@ -1,11 +1,11 @@
 package com.ashr.cleanMvvmAir.presentation
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,8 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.presentation.country.CountryUiIntent
 import com.ashr.cleanMvvmAir.presentation.country.CountryViewModel
-import com.ashr.cleanMvvmAir.presentation.ui.theme.dividerColor
-import com.ashr.cleanMvvmAir.presentation.ui.widget.AppOutlinedTextField
+import com.ashr.cleanMvvmAir.presentation.ui.widget.AppTextField
 import com.ashr.cleanMvvmAir.presentation.ui.widget.CircularLoadingView
 
 @Composable
@@ -47,9 +46,8 @@ fun CountryScreen(
                 viewModel.processIntents(CountryUiIntent.GetCountries)
             }
         } else {
-            AppOutlinedTextField(
-                value = uiState.filter,
-                label = "Write your country",
+            AppTextField(value = uiState.filter,
+                label = "filter",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
@@ -60,25 +58,13 @@ fun CountryScreen(
                         )
                     )
                 })
+
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
                 items(uiState.filteredCountries) { country ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 5.dp)
-                            .border(
-                                width = 1.25.dp,
-                                color = MaterialTheme.colors.dividerColor,
-                                shape = RoundedCornerShape(10.dp)
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        ItemRow(country.name, onClick = { onNavigateToStates(country.name) })
-                    }
-
+                    ItemRow(country.name, onClick = { onNavigateToStates(country.name) })
                 }
             }
         }

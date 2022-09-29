@@ -6,12 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -71,7 +74,7 @@ fun MainScreen(viewModel: MainViewModel) {
         canPop = Screen.Country.route !== (controller.currentBackStackEntry?.destination?.route)
 
     }
-    val navigationIcon: (@Composable () -> Unit)? =
+    val navigationIcon: (@Composable () -> Unit) =
         if (canPop) {
             {
                 IconButton(onClick = { navController.popBackStack() }) {
@@ -83,7 +86,14 @@ fun MainScreen(viewModel: MainViewModel) {
                 }
             }
         } else {
-            null
+            {
+                Icon(
+                    imageVector = Icons.Filled.Home,
+                    contentDescription = null,
+                    Modifier.padding(4.dp),
+                    tint = MaterialTheme.colors.onPrimary
+                )
+            }
         }
     Scaffold(topBar = {
         Toolbar(
