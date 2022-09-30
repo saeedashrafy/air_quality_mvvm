@@ -100,8 +100,8 @@ fun CityDataScreen(
                         contentDescription = cityData.domainPollutionData.aqiLevel.levelName,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .width(70.dp)
-                            .height(70.dp)
+                            .width(65.dp)
+                            .height(65.dp)
                             .background(Color.White.copy(alpha = 0.5f), CircleShape)
                             .padding(3.dp)
 
@@ -120,13 +120,13 @@ fun CityDataScreen(
 
 fun AqiLevel.getAppropriateColor(): Color {
     return when (this) {
-        AqiLevel.Good -> aqi_good
-        AqiLevel.Moderate -> aqi_moderate
-        AqiLevel.UnhealthyForSensitiveGroups -> aqi_unhealthyForSensitive
-        AqiLevel.Unhealthy -> aqi_unhealthy
-        AqiLevel.VeryUnhealthy -> aqi_veryUnhealthy
-        AqiLevel.Hazardous -> aqi_hazardous
-        AqiLevel.Unknown -> aqi_good
+        AqiLevel.Good -> Aqi_good
+        AqiLevel.Moderate -> Aqi_moderate
+        AqiLevel.UnhealthyForSensitiveGroups -> Aqi_unhealthyForSensitive
+        AqiLevel.Unhealthy -> Aqi_unhealthy
+        AqiLevel.VeryUnhealthy -> Aqi_veryUnhealthy
+        AqiLevel.Hazardous -> Aqi_hazardous
+        AqiLevel.Unknown -> Aqi_good
     }
 }
 

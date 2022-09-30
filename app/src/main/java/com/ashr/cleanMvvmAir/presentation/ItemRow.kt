@@ -22,9 +22,9 @@ fun ItemRow(title: String, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(vertical = 5.dp, horizontal = 15.dp)
             .border(
-                width = 1.dp,
+                width = 1.25.dp,
                 color = MaterialTheme.colors.dividerColor,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(5.dp)
             )
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
@@ -34,15 +34,15 @@ fun ItemRow(title: String, onClick: () -> Unit) {
             contentDescription = "",
             modifier = Modifier
                 .padding(10.dp)
-                .width(45.dp)
-                .height(45.dp),
+                .width(40.dp)
+                .height(40.dp),
         )
         Text(
             text = title,
             style = MaterialTheme.typography.h5,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 30.dp, horizontal = 20.dp)
+                .padding(vertical = 20.dp, horizontal = 20.dp)
         )
     }
 }

@@ -1,11 +1,12 @@
 package com.ashr.cleanMvvmAir.presentation
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +22,6 @@ import com.ashr.cleanMvvmAir.presentation.ui.widget.CircularLoadingView
 @Composable
 fun CountryScreen(
     title: MutableState<String>,
-    padding: PaddingValues,
     onNavigateToStates: (String) -> Unit
 ) {
     title.value = stringResource(id = R.string.app_name)
@@ -41,11 +41,18 @@ fun CountryScreen(
     ) {
         if (uiState.isLoading)
             CircularLoadingView()
-        else if (uiState.fetchedCountries.isEmpty()) {
+        else if (uiState.fetchedCountries.isEmpty() && uiState.error.isNotEmpty()) {
             ErrorHandler {
                 viewModel.processIntents(CountryUiIntent.GetCountries)
             }
         } else {
+            Text(
+                "Select Country",
+                style = MaterialTheme.typography.h3,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
             AppTextField(value = uiState.filter,
                 label = "filter",
                 modifier = Modifier

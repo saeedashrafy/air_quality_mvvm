@@ -46,7 +46,6 @@ class CountryViewModel @Inject constructor(
                     )
                 }
             } catch (exp: Exception) {
-
                 updateState {
                     it.copy(isLoading = false, error = "some error occurred")
                 }

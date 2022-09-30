@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +48,13 @@ fun StateScreen(
                 )
             }
         } else {
+            Text(
+                "Select State",
+                style = MaterialTheme.typography.h3,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
             AppTextField(
                 value = uiState.filter,
                 label = "filter",
