@@ -1,5 +1,6 @@
 package com.ashr.cleanMvvmAir.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,12 +11,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.presentation.country.CountryUiIntent
 import com.ashr.cleanMvvmAir.presentation.country.CountryViewModel
+import com.ashr.cleanMvvmAir.presentation.ui.theme.GradientFirst
+import com.ashr.cleanMvvmAir.presentation.ui.theme.GradientSecond
+import com.ashr.cleanMvvmAir.presentation.ui.theme.GradientThird
 import com.ashr.cleanMvvmAir.presentation.ui.widget.AppTextField
 import com.ashr.cleanMvvmAir.presentation.ui.widget.CircularLoadingView
 
@@ -35,8 +41,7 @@ fun CountryScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (uiState.isLoading)
@@ -48,9 +53,18 @@ fun CountryScreen(
         } else {
             Text(
                 "Select Country",
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.h4.copy(color = Color.White),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                GradientFirst,
+                                GradientSecond,
+                                GradientThird,
+                            )
+                        )
+                    )
                     .padding(10.dp)
             )
             AppTextField(value = uiState.filter,

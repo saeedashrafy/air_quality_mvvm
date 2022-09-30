@@ -30,6 +30,11 @@ val Aqi_unhealthy = Color(0XFFff2a54)
 val Aqi_veryUnhealthy = Color(0XFF4b3c99)
 val Aqi_hazardous = Color(0XFF971917)
 
+
+val GradientFirst = Color(0xff5147e8)
+val GradientSecond = Color(0xFF59aec3)
+val GradientThird = Color(0xFF7afaad)
+
 val Colors.navigationBackIconColor: Color
     @Composable get() = if (isLight) navigationBackIconLight else navigationBackIconDark
 
