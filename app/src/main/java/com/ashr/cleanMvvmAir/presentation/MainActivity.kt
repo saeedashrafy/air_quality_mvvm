@@ -115,7 +115,6 @@ fun AppNavHost(
         composable(route = Screen.Country.route) {
             CountryScreen(
                 title,
-                padding = padding
             ) {
                 navController.navigate("state/${it}")
             }
