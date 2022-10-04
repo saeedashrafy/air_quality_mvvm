@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
         <activity
-            android:name="com.ashr.cleanMvvmAir.presentation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
          >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.ashr.cleanMvvmAir.presentation
+package com.ashr.cleanMvvmAir.presentation.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

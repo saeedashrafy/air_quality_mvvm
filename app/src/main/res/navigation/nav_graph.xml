@@ -1,0 +1,44 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/countryFragment">
+
+    <fragment
+        android:id="@+id/countryFragment"
+        android:name="com.ashr.cleanMvvmAir.presentation.country.CountryFragment"
+        android:label="">
+
+        <action
+            android:id="@+id/action_countryFragment_to_stateFragment"
+            app:destination="@id/stateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stateFragment"
+        android:name="com.ashr.cleanMvvmAir.presentation.state.StateFragment"
+        android:label="">
+
+        <action
+            android:id="@+id/action_stateFragment_to_cityFragment"
+            app:destination="@id/cityFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/cityFragment"
+        android:name="com.ashr.cleanMvvmAir.presentation.city.list.CityFragment"
+        android:label="">
+
+        <action
+            android:id="@+id/action_cityFragment_to_cityDataFragment"
+            app:destination="@id/cityDataFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cityDataFragment"
+        android:name="com.ashr.cleanMvvmAir.presentation.city.data.CityDataFragment"
+        android:label="">
+
+    </fragment>
+
+
+</navigation>

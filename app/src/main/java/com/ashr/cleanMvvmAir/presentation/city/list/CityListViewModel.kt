@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.ashr.cleanMvvmAir.core.dispatcher.DispatcherAnnotations
 import com.ashr.cleanMvvmAir.domain.model.DomainCity
 import com.ashr.cleanMvvmAir.domain.usecase.GetCityUseCase
-import com.ashr.cleanMvvmAir.presentation.BaseViewModel
+import com.ashr.cleanMvvmAir.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -14,11 +14,12 @@ import javax.inject.Inject
 class CityViewModel @Inject constructor(
     private val getCityUseCase: GetCityUseCase,
     @DispatcherAnnotations.Io private val dispatcher: CoroutineDispatcher
-) : BaseViewModel<CityUiState, CityUiIntent>(CityUiState(isLoading = true)) {
+) : BaseViewModel<CityUiState, CityUiIntent>(CityUiState()) {
     override fun processIntents(intent: CityUiIntent) {
         when (intent) {
             is CityUiIntent.GetCities -> getCities(intent.countryName, intent.stateName)
             is CityUiIntent.ChangeFilter -> changeFilter(intent.filter)
+            else -> {}
         }
     }
 

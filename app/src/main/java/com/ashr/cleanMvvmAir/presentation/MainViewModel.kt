@@ -1,32 +1,18 @@
 package com.ashr.cleanMvvmAir.presentation
 
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.ashr.cleanMvvmAir.presentation.base.BaseViewModel
 
-@HiltViewModel
-class MainViewModel @Inject constructor() :
-    BaseViewModel<MainUiState, MainUiIntent>(MainUiState()) {
+class MainViewModel : BaseViewModel<MainUiState, MainUiIntent>(MainUiState()) {
 
     override fun processIntents(intent: MainUiIntent) {
-        when (intent) {
-            is MainUiIntent.ChangeTheme -> {
-                changeTheme()
-            }
-        }
+        TODO("Not yet implemented")
     }
-
-    private fun changeTheme() {
-        updateState {
-            it.copy(themIsDark = !it.themIsDark)
-        }
-    }
-
 }
 
 data class MainUiState(
-    val themIsDark: Boolean = false
+    val toolbarTitle: String = ""
 )
 
 sealed class MainUiIntent {
-    object ChangeTheme : MainUiIntent()
+    data class ChangeTitle(val title: String) : MainUiIntent()
 }

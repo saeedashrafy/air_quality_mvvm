@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#EBEBEB</color>
+    <color name="aqi_good">#48ac66</color>
+    <color name="aqi_moderate">#fdcd2f</color>
+    <color name="aqi_unhealthyForSensitive">#ff5c01</color>
+    <color name="aqi_unhealthy">#ff2a54</color>
+    <color name="aqi_veryUnhealthy">#4b3c99</color>
+    <color name="aqi_hazardous">#971917</color>
+
 </resources>
