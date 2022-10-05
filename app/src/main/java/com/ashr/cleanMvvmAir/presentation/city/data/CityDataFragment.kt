@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.databinding.FragmentCityDataBinding
 import com.ashr.cleanMvvmAir.domain.model.AqiLevel
+import com.ashr.cleanMvvmAir.presentation.MainUiIntent
+import com.ashr.cleanMvvmAir.presentation.MainViewModel
 import com.ashr.cleanMvvmAir.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,6 +27,7 @@ class CityDataFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val viewModel: CityDataViewModel by viewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
 
     private var countryName: String = ""
     private var stateName: String = ""
@@ -41,8 +45,8 @@ class CityDataFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         getData()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
@@ -59,6 +63,7 @@ class CityDataFragment : BaseFragment() {
     }
 
     override fun initUI() {
+        sharedViewModel.processIntents(MainUiIntent.ChangeTitle("AQI of $cityName from $countryName"))
         shape = GradientDrawable()
         shape.cornerRadius = 15f
     }

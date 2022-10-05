@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.databinding.FragmentStateBinding
+import com.ashr.cleanMvvmAir.presentation.MainUiIntent
+import com.ashr.cleanMvvmAir.presentation.MainViewModel
 import com.ashr.cleanMvvmAir.presentation.base.BaseFragment
 import com.ashr.cleanMvvmAir.presentation.util.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +26,8 @@ class StateFragment : BaseFragment() {
     private var _binding: FragmentStateBinding? = null
 
     private val viewModel: StateViewModel by viewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
+
     private lateinit var adapter: StateAdapter
 
     private var countryName: String = ""
@@ -45,13 +50,10 @@ class StateFragment : BaseFragment() {
             countryName = it.getString("countryName").toString()
         }
         super.onViewCreated(view, savedInstanceState)
-
-        /*   binding.buttonSecond.setOnClickListener {
-               findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-           }*/
     }
 
     override fun initUI() {
+        sharedViewModel.processIntents(MainUiIntent.ChangeTitle("States of $countryName"))
         binding.editTextFilter.afterTextChanged {
             viewModel.processIntents(StateUiIntent.ChangeFilter(it))
         }

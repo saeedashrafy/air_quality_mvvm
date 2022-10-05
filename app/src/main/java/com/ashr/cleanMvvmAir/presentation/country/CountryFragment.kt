@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.databinding.FragmentCountryBinding
+import com.ashr.cleanMvvmAir.presentation.MainUiIntent
+import com.ashr.cleanMvvmAir.presentation.MainViewModel
 import com.ashr.cleanMvvmAir.presentation.base.BaseFragment
 import com.ashr.cleanMvvmAir.presentation.util.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +26,8 @@ class CountryFragment : BaseFragment() {
     private var _binding: FragmentCountryBinding? = null
 
     private val viewModel: CountryViewModel by viewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
+
 
     private lateinit var adapter: CountryAdapter
 
@@ -37,6 +42,7 @@ class CountryFragment : BaseFragment() {
     }
 
     override fun initUI() {
+        sharedViewModel.processIntents(MainUiIntent.ChangeTitle("Countries"))
         binding.editTextFilter.afterTextChanged {
             viewModel.processIntents(CountryUiIntent.ChangeFilter(it))
         }

@@ -1,11 +1,30 @@
 package com.ashr.cleanMvvmAir.presentation
 
 import com.ashr.cleanMvvmAir.presentation.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainViewModel : BaseViewModel<MainUiState, MainUiIntent>(MainUiState()) {
+@HiltViewModel
+class MainViewModel @Inject constructor() :
+    BaseViewModel<MainUiState, MainUiIntent>(MainUiState()) {
+
+    init {
+        Timber.d("Shared")
+    }
 
     override fun processIntents(intent: MainUiIntent) {
-        TODO("Not yet implemented")
+        when (intent) {
+            is MainUiIntent.ChangeTitle -> {
+                changeTitle(intent.title)
+            }
+        }
+    }
+
+    private fun changeTitle(title: String) {
+        updateState {
+            it.copy(toolbarTitle = title)
+        }
     }
 }
 
