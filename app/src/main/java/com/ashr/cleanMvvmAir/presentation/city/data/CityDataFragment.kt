@@ -2,9 +2,7 @@ package com.ashr.cleanMvvmAir.presentation.city.data
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,10 +19,8 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class CityDataFragment : BaseFragment() {
+class CityDataFragment : BaseFragment<FragmentCityDataBinding>() {
 
-    private var _binding: FragmentCityDataBinding? = null
-    private val binding get() = _binding!!
 
     private val viewModel: CityDataViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
@@ -36,23 +32,12 @@ class CityDataFragment : BaseFragment() {
     lateinit var shape: GradientDrawable
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCityDataBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         getData()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     private fun getData() {
         arguments?.let {
@@ -73,15 +58,15 @@ class CityDataFragment : BaseFragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     if (uiState.isLoading) {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.containerData.visibility = View.GONE
-                        binding.containerTemperature.visibility = View.GONE
-                        binding.containerHumidity.visibility = View.GONE
+                        viewBinding.progressBar.visibility = View.VISIBLE
+                        viewBinding.containerData.visibility = View.GONE
+                        viewBinding.containerTemperature.visibility = View.GONE
+                        viewBinding.containerHumidity.visibility = View.GONE
                     } else {
-                        binding.progressBar.visibility = View.GONE
-                        binding.containerData.visibility = View.VISIBLE
-                        binding.containerTemperature.visibility = View.VISIBLE
-                        binding.containerHumidity.visibility = View.VISIBLE
+                        viewBinding.progressBar.visibility = View.GONE
+                        viewBinding.containerData.visibility = View.VISIBLE
+                        viewBinding.containerTemperature.visibility = View.VISIBLE
+                        viewBinding.containerHumidity.visibility = View.VISIBLE
                     }
                     if (uiState.data == null && !uiState.isLoading && uiState.error.isEmpty()) {
                         viewModel.processIntents(
@@ -94,14 +79,14 @@ class CityDataFragment : BaseFragment() {
                     }
                     uiState.data?.let { cityData ->
                         "US AQI ${cityData.domainPollutionData.airQualityIndexUs}".let {
-                            binding.textviewIndex.text = it
+                            viewBinding.textviewIndex.text = it
                         }
-                        binding.textviewLevel.text = cityData.domainPollutionData.aqiLevel.levelName
-                        binding.textviewTemperatureValue.text =
+                        viewBinding.textviewLevel.text = cityData.domainPollutionData.aqiLevel.levelName
+                        viewBinding.textviewTemperatureValue.text =
                             cityData.domainWeatherData.temperature.toString()
-                        binding.textviewUpdatedValue.text =
+                        viewBinding.textviewUpdatedValue.text =
                             cityData.domainPollutionData.updatedTime
-                        binding.textviewHumidityValue.text =
+                        viewBinding.textviewHumidityValue.text =
                             cityData.domainWeatherData.humidity
                     }
                 }
@@ -132,4 +117,8 @@ class CityDataFragment : BaseFragment() {
             AqiLevel.Unknown -> "https://img.icons8.com/emoji/48/000000/smiling-face-with-smiling-eyes.png"
         }
     }
+
+    override fun getBinding(): FragmentCityDataBinding =
+        FragmentCityDataBinding.inflate(layoutInflater)
+
 }

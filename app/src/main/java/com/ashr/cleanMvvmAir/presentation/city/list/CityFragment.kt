@@ -1,9 +1,7 @@
 package com.ashr.cleanMvvmAir.presentation.city.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,9 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CityFragment : BaseFragment() {
-
-    private var _binding: FragmentStateBinding? = null
+class CityFragment : BaseFragment<FragmentStateBinding>() {
 
     private val viewModel: CityViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
@@ -33,17 +29,6 @@ class CityFragment : BaseFragment() {
     private var countryName: String = ""
     private var stateName: String = ""
 
-
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentStateBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
@@ -56,10 +41,10 @@ class CityFragment : BaseFragment() {
 
     override fun initUI() {
         sharedViewModel.processIntents(MainUiIntent.ChangeTitle("Cities of $stateName"))
-        binding.editTextFilter.afterTextChanged {
+        viewBinding.editTextFilter.afterTextChanged {
             viewModel.processIntents(CityUiIntent.ChangeFilter(it))
         }
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.recycler.layoutManager = LinearLayoutManager(requireContext())
         adapter = CityAdapter { cityName ->
             val bundle = Bundle().apply {
                 putString("countryName", countryName)
@@ -71,7 +56,7 @@ class CityFragment : BaseFragment() {
                 args = bundle
             )
         }
-        binding.recycler.adapter = adapter
+        viewBinding.recycler.adapter = adapter
     }
 
     override fun observeData() {
@@ -79,14 +64,14 @@ class CityFragment : BaseFragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     if (uiState.isLoading) {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.textInputFilter.visibility = View.GONE
-                        binding.recycler.visibility = View.GONE
+                        viewBinding.progressBar.visibility = View.VISIBLE
+                        viewBinding.textInputFilter.visibility = View.GONE
+                        viewBinding.recycler.visibility = View.GONE
                     } else {
-                        binding.progressBar.visibility = View.GONE
+                        viewBinding.progressBar.visibility = View.GONE
                         if (uiState.error.isEmpty()) {
-                            binding.textInputFilter.visibility = View.VISIBLE
-                            binding.recycler.visibility = View.VISIBLE
+                            viewBinding.textInputFilter.visibility = View.VISIBLE
+                            viewBinding.recycler.visibility = View.VISIBLE
                         }
                     }
                     if (uiState.fetchedCities.isEmpty() && !uiState.isLoading && uiState.error.isEmpty()) {
@@ -98,8 +83,6 @@ class CityFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
+    override fun getBinding(): FragmentStateBinding = FragmentStateBinding.inflate(layoutInflater)
 }

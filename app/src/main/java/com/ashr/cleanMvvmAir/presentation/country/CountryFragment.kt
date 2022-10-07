@@ -1,9 +1,7 @@
 package com.ashr.cleanMvvmAir.presentation.country
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,9 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CountryFragment : BaseFragment() {
-
-    private var _binding: FragmentCountryBinding? = null
+class CountryFragment : BaseFragment<FragmentCountryBinding>() {
 
     private val viewModel: CountryViewModel by viewModels()
     private val sharedViewModel: MainViewModel by activityViewModels()
@@ -31,29 +27,20 @@ class CountryFragment : BaseFragment() {
 
     private lateinit var adapter: CountryAdapter
 
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCountryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun initUI() {
         sharedViewModel.processIntents(MainUiIntent.ChangeTitle("Countries"))
-        binding.editTextFilter.afterTextChanged {
+        viewBinding.editTextFilter.afterTextChanged {
             viewModel.processIntents(CountryUiIntent.ChangeFilter(it))
         }
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        viewBinding.recycler.layoutManager = LinearLayoutManager(requireContext())
         adapter = CountryAdapter() { countryName ->
             val bundle = Bundle().apply {
                 putString("countryName", countryName)
             }
             findNavController().navigate(R.id.action_countryFragment_to_stateFragment, bundle)
         }
-        binding.recycler.adapter = adapter
+        viewBinding.recycler.adapter = adapter
     }
 
     override fun observeData() {
@@ -61,13 +48,13 @@ class CountryFragment : BaseFragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     if (uiState.isLoading) {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.textInputFilter.visibility = View.GONE
-                        binding.recycler.visibility = View.GONE
+                        viewBinding.progressBar.visibility = View.VISIBLE
+                        viewBinding.textInputFilter.visibility = View.GONE
+                        viewBinding.recycler.visibility = View.GONE
                     } else {
-                        binding.progressBar.visibility = View.GONE
-                        binding.textInputFilter.visibility = View.VISIBLE
-                        binding.recycler.visibility = View.VISIBLE
+                        viewBinding.progressBar.visibility = View.GONE
+                        viewBinding.textInputFilter.visibility = View.VISIBLE
+                        viewBinding.recycler.visibility = View.VISIBLE
                     }
 
                     if (uiState.fetchedCountries.isEmpty() && !uiState.isLoading && uiState.error.isEmpty()) {
@@ -79,10 +66,7 @@ class CountryFragment : BaseFragment() {
         }
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun getBinding(): FragmentCountryBinding =
+        FragmentCountryBinding.inflate(layoutInflater)
 
 }
