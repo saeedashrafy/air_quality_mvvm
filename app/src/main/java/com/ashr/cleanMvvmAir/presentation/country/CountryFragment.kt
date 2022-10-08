@@ -2,7 +2,7 @@ package com.ashr.cleanMvvmAir.presentation.country
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.databinding.FragmentCountryBinding
-import com.ashr.cleanMvvmAir.presentation.MainUiIntent
-import com.ashr.cleanMvvmAir.presentation.MainViewModel
+import com.ashr.cleanMvvmAir.presentation.MainActivity.Companion.BUNDLE_KEY
+import com.ashr.cleanMvvmAir.presentation.MainActivity.Companion.REQUEST_KEY
 import com.ashr.cleanMvvmAir.presentation.base.BaseFragment
 import com.ashr.cleanMvvmAir.presentation.util.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,14 +22,12 @@ import kotlinx.coroutines.launch
 class CountryFragment : BaseFragment<FragmentCountryBinding>() {
 
     private val viewModel: CountryViewModel by viewModels()
-    private val sharedViewModel: MainViewModel by activityViewModels()
-
 
     private lateinit var adapter: CountryAdapter
 
 
     override fun initUI() {
-        sharedViewModel.processIntents(MainUiIntent.ChangeTitle("Countries"))
+        activity?.supportFragmentManager?.setFragmentResult(REQUEST_KEY, bundleOf(BUNDLE_KEY to "Countries"))
         viewBinding.editTextFilter.afterTextChanged {
             viewModel.processIntents(CountryUiIntent.ChangeFilter(it))
         }

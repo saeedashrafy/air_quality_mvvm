@@ -1,9 +1,7 @@
 package com.ashr.cleanMvvmAir.presentation
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -18,8 +16,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         observeData()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -41,10 +38,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect { uiState ->
-                binding.textViewToolbar.text = uiState.toolbarTitle
-            }
+        supportFragmentManager.setFragmentResultListener(
+            REQUEST_KEY,
+            this@MainActivity,
+        ) { _, bundle ->
+            binding.textViewToolbar.text = bundle.getString(BUNDLE_KEY)
         }
+    }
+
+    companion object {
+        const val REQUEST_KEY = "REQUEST_KEY"
+        const val BUNDLE_KEY = "BUNDLE_KEY"
     }
 }

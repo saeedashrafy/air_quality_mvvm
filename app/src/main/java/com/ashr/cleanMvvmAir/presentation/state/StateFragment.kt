@@ -2,7 +2,7 @@ package com.ashr.cleanMvvmAir.presentation.state
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ashr.cleanMvvmAir.R
 import com.ashr.cleanMvvmAir.databinding.FragmentStateBinding
-import com.ashr.cleanMvvmAir.presentation.MainUiIntent
-import com.ashr.cleanMvvmAir.presentation.MainViewModel
+import com.ashr.cleanMvvmAir.presentation.MainActivity
 import com.ashr.cleanMvvmAir.presentation.base.BaseFragment
 import com.ashr.cleanMvvmAir.presentation.util.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,6 @@ class StateFragment : BaseFragment<FragmentStateBinding>() {
 
 
     private val viewModel: StateViewModel by viewModels()
-    private val sharedViewModel: MainViewModel by activityViewModels()
 
     private lateinit var adapter: StateAdapter
 
@@ -38,7 +36,10 @@ class StateFragment : BaseFragment<FragmentStateBinding>() {
     }
 
     override fun initUI() {
-        sharedViewModel.processIntents(MainUiIntent.ChangeTitle("States of $countryName"))
+        activity?.supportFragmentManager?.setFragmentResult(
+            MainActivity.REQUEST_KEY, bundleOf(
+                MainActivity.BUNDLE_KEY to "States of $countryName")
+        )
         viewBinding.editTextFilter.afterTextChanged {
             viewModel.processIntents(StateUiIntent.ChangeFilter(it))
         }
