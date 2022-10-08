@@ -61,11 +61,13 @@ class CityDataFragment : BaseFragment<FragmentCityDataBinding>() {
                     if (uiState.isLoading) {
                         viewBinding.progressBar.visibility = View.VISIBLE
                         viewBinding.containerData.visibility = View.GONE
+                        viewBinding.containerUpdated.visibility = View.GONE
                         viewBinding.containerTemperature.visibility = View.GONE
                         viewBinding.containerHumidity.visibility = View.GONE
                     } else {
                         viewBinding.progressBar.visibility = View.GONE
                         viewBinding.containerData.visibility = View.VISIBLE
+                        viewBinding.containerUpdated.visibility = View.VISIBLE
                         viewBinding.containerTemperature.visibility = View.VISIBLE
                         viewBinding.containerHumidity.visibility = View.VISIBLE
                     }
